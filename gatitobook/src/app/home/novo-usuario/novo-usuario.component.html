@@ -2,16 +2,26 @@
 
 <form class="form mt-4" [formGroup]="novoUsuarioForm" (ngSubmit)="cadastrar()">
   <div class="form-group">
-    <input placeholder="e-mail" class="form-control" formControlName="email"/>
+    <input placeholder="e-mail" class="form-control" formControlName="email" />
+    <app-mensagens *ngIf="novoUsuarioForm.get('email')?.errors?.['required'] && novoUsuarioForm.get('email')?.touched "
+      mensagem="E-mail Obrigatório">
+    </app-mensagens>
+    <app-mensagens *ngIf="novoUsuarioForm.get('email')?.errors?.['email'] &&
+    novoUsuarioForm.get('email')?.touched" mensagem="E-mail no formato incorreto">
+    </app-mensagens>
   </div>
   <div class="form-group">
-    <input placeholder="Nome Completo" class="form-control" formControlName="fullName"/>
+    <input placeholder="Nome Completo" class="form-control" formControlName="fullName" />
+    <app-mensagens *ngIf="
+      novoUsuarioForm.get('fullName')?.errors &&
+      novoUsuarioForm.get('fullName')?.touched" mensagem="Nome incorreto">
+    </app-mensagens>
   </div>
   <div class="form-group">
-    <input placeholder="Usuário" class="form-control" formControlName="userName"/>
+    <input placeholder="Usuário" class="form-control" formControlName="userName" />
   </div>
   <div class="form-group">
-    <input placeholder="Senha" class="form-control" formControlName="password"/>
+    <input placeholder="Senha" class="form-control" formControlName="password" />
   </div>
 
   <button class="btn btn-primary btn-block">Cadastro</button>
