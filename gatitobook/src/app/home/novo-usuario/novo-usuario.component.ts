@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { UsuarioExisteService } from './usuario-existe.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,7 +18,8 @@ export class NovoUsuarioComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private novoUsuarioService: NovoUsuarioService,
-    private UsuarioExisteService: UsuarioExisteService
+    private UsuarioExisteService: UsuarioExisteService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +35,16 @@ export class NovoUsuarioComponent implements OnInit {
   }
 
   cadastrar() {
-    const novoUsuario = this.novoUsuarioForm.getRawValue() as NovoUsuario;
+   if(this.novoUsuarioForm.valid){
+     const novoUsuario = this.novoUsuarioForm.getRawValue() as NovoUsuario;
+      this.novoUsuarioService.cadastaNovoUsuario(novoUsuario).subscribe(()=>{
+        this.router.navigate(['']);
+      },
+      (error) => {
+        console.log(error);
+      }
+      );
+
+   }
   }
 }
